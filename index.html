@@ -1492,18 +1492,20 @@ ScrollTrigger.create({
 });
 
 const menuTrack = document.getElementById('menuTrack');
-const menuCards = menuTrack.querySelectorAll('.menu-card');
-const totalW = menuCards.length * (380 + 40) + window.innerWidth * 0.2;
 
-const menuST = gsap.to(menuTrack, {
-  x: () => -(totalW - window.innerWidth),
+function getScrollAmount() {
+  return -(menuTrack.scrollWidth - window.innerWidth);
+}
+
+gsap.to(menuTrack, {
+  x: getScrollAmount,
   ease:'none',
   scrollTrigger:{
-    trigger:'.menu-section',
-    start:'top+=60vh top',
-    end:() => '+=' + totalW,
+    trigger:'.menu-horizontal',
+    start:'top top',
+    end:() => '+=' + (-getScrollAmount()),
     scrub:1,
-    pin:'.menu-horizontal',
+    pin:true,
     anticipatePin:1,
     invalidateOnRefresh:true,
   }
